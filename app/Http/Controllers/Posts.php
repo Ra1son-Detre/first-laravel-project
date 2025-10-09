@@ -13,9 +13,8 @@ class Posts extends Controller
         $posts = Post::all();
         /* dd($posts); */
 
-        return view('posts.index', [
+        return view('posts.index', [ //спец метод где возврощаем из нужной директории вюшку и передаем 2-ым аргументом ассоц массив для шаблона
             'posts'=> $posts,
-            'sum'=> 100
         ]);
     }
 

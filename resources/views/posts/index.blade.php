@@ -1,5 +1,5 @@
 <div>
-<p> Hello world!! {{$sum}}</p>
+<p> Hello world!!</p>
 </div>
 <a href="/posts/create">Create post</a>
 <ul>
