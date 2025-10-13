@@ -17,6 +17,7 @@ use App\Http\Controllers\Cars;
 Route::get('/cars', [Cars::class, 'index']);
 Route::get('/cars/create', [Cars::class, 'create']);
 Route::get('/cars/{id}', [Cars::class, 'show']);
+Route::patch('/cars/{id}', [Cars::class, 'update']);
 Route::post('/cars', [Cars::class, 'store']);
 
 

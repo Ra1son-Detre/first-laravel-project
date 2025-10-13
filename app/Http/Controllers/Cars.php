@@ -27,7 +27,7 @@ class Cars extends Controller
         $validated = $request->validate([
              'brand' => 'required|min:2|max:100',
              'model' => 'required|min:2|max:100',
-             'price' => 'required|min:2|max:100',
+             'price' => 'required|integer|min:0|max:10000000000',
         ]);
         
         $car = Car::create($validated);
@@ -51,7 +51,14 @@ class Cars extends Controller
   
     public function update(Request $request, $id)
     {
-        //
+       $validated = $request->validate([
+        'price' => 'required|numeric|min:1|max:1000000000'
+       ]);
+       $car =Car::findOrFail($id);
+       $car->price = $validated['price'];
+       $car->save();
+       
+       return redirect('/cars')->with('success', 'Цена обнавлена');
     }
 
  
