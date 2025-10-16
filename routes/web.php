@@ -21,9 +21,15 @@ Route::patch('/cars/{id}', [Cars::class, 'update']);
 Route::post('/cars', [Cars::class, 'store']);
 
 
-/* Route::get('/posts', [Posts::class, 'index']);
+
+
+
+
+Route::get('/posts', [Posts::class, 'index'])->name('posts.showAll');
 Route::get('/posts/create', [Posts::class, 'create']);
-Route::get('/posts/{id}', [Posts::class, 'show']);
-Route::post('/posts', [Posts::class, 'store']); */
+Route::get('/posts/{id}', [Posts::class, 'show'])->name('posts.show');
+Route::get('/posts/{id}/edit', [Posts::class, 'edit']);
+Route::post('/posts', [Posts::class, 'store'])->name('posts.store');
+Route::put('/posts/{id}', [Posts::class, 'update'])->name('posts.update');
 
 
