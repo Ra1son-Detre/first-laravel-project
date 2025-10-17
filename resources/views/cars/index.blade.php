@@ -1,22 +1,31 @@
-<head>
-    <title>All Cars</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<div>
-    <p>All cars.</p>
-</div>
-<a href="{{route('cars.create')}}">Add car</a>
-<ul>
-    @foreach($cars as $car)
-        <li>
-            <a href="{{route('cars.showById', [$car->id])}}">
-                Model: {{ $car->brand }} <br> Brand: {{ $car->model }}
-                <br></br>
-            </a>
-        </li>
-    @endforeach
-</ul>
-<div> @if (session('success'))
-    <div class="alert alert-success" > {{session('success')}}</div>
+@extends('layouts.app')
+
+@section('title', 'All Cars')
+
+@section('content')
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
-</div>
+
+    <h1 class="mb-4">All Cars</h1>
+
+    <a href="{{ route('cars.create') }}" class="btn btn-success mb-3">Add Car</a>
+
+    <div class="list-group">
+        @foreach($cars as $car)
+            <a href="{{ route('cars.showById', $car->id) }}" class="list-group-item list-group-item-action">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <strong>Brand:</strong> {{ $car->brand }}<br>
+                        <strong>Model:</strong> {{ $car->model }}
+                    </div>
+                    <span class="badge bg-primary align-self-center">${{ $car->price }}</span>
+                </div>
+            </a>
+        @endforeach
+    </div>
+
+@endsection

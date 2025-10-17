@@ -2,14 +2,19 @@
     'label',
     'name',
     'defaultValue' => '',
+])
 
-    ])
-
-    <div>
-        {{$label}} 
-        <input name="{{$name}}" value="{{$errors->any() ?  old($name) : $defaultValue }}"></div>
-        @error($name)
-        <div style="color:red">{{$message}}</div>
-        @enderror
-        </div>
+<div class="mb-3">
+    <label for="{{ $name }}" class="form-label">{{ $label }}</label>
+    <input 
+        type="text" 
+        name="{{ $name }}" 
+        id="{{ $name }}" 
+        class="form-control @error($name) is-invalid @enderror" 
+        value="{{ $errors->any() ? old($name) : $defaultValue }}"
+    >
+    @error($name)
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
    
