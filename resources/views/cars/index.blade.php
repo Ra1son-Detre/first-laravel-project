@@ -5,14 +5,13 @@
 <div>
     <p>All cars.</p>
 </div>
-
-<a href="/cars/create">Add car</a>
-
+<a href="{{route('cars.create')}}">Add car</a>
 <ul>
     @foreach($cars as $car)
         <li>
-            <a href="/cars/{{ $car->id }}">
-                {{ $car->brand }} {{ $car->model }}
+            <a href="{{route('cars.showById', [$car->id])}}">
+                Model: {{ $car->brand }} <br> Brand: {{ $car->model }}
+                <br></br>
             </a>
         </li>
     @endforeach
