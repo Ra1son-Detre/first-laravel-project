@@ -64,4 +64,9 @@ class Cars extends Controller
         $car->delete();
         return redirect()->route('cars.showAll')->with('success', "Car: $car->model delete ");
     }
+
+    public function check() 
+    {
+        dd(config('app-cars.transmissions'));
+    }
 }

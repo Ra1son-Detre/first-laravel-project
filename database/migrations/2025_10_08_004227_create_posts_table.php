@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title', 256);
             $table->string('content');
+            $table->string('transmission', 256);
         });
     }
 
@@ -29,5 +30,8 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('posts');
+        Schema::table('cars', function (Blueprint $table) {
+            $table->dropColumn('transmission');
+        });
     }
 };
