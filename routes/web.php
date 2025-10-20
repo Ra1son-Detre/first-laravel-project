@@ -26,11 +26,11 @@ Route::delete('/cars/{id}', [Cars::class, 'destroy'])->name('cars.delete');
 
 
 
-Route::get('/posts', [Posts::class, 'index'])->name('posts.showAll');
+/* Route::get('/posts', [Posts::class, 'index'])->name('posts.showAll');
 Route::get('/posts/create', [Posts::class, 'create']);
 Route::get('/posts/{id}', [Posts::class, 'show'])->name('posts.show');
 Route::get('/posts/{id}/edit', [Posts::class, 'edit']);
 Route::post('/posts', [Posts::class, 'store'])->name('posts.store');
-Route::put('/posts/{id}', [Posts::class, 'update'])->name('posts.update');
+Route::put('/posts/{id}', [Posts::class, 'update'])->name('posts.update'); */
 
 

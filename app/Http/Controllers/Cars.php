@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Http\Requests\Cars\Save as SaveRequest;
 
 class Cars extends Controller
 {
@@ -22,15 +23,10 @@ class Cars extends Controller
     }
 
     
-    public function store(Request $request)
+    public function store(SaveRequest $request)
     {
-        $validated = $request->validate([
-             'brand' => 'required|min:2|max:100',
-             'model' => 'required|min:2|max:100',
-             'price' => 'required|integer|min:0|max:10000000000',
-        ]);
         
-        $car = Car::create($validated);
+        $car = Car::create($request->validated());
         $cars = Car::all();
         return view('cars.index', ['cars'=>$cars]);
     }
@@ -49,7 +45,7 @@ class Cars extends Controller
     }
 
   
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) //пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
     {
        $validated = $request->validate([
         'price' => 'required|numeric|min:1|max:1000000000'
