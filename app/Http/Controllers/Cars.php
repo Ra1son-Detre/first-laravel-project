@@ -28,7 +28,7 @@ class Cars extends Controller
         
         $car = Car::create($request->validated());
         $cars = Car::all();
-        return view('cars.index', ['cars'=>$cars]);
+        return redirect()->route('cars.showAll')->with('success', 'Машина успешно добавлена!');
     }
 
    
@@ -48,11 +48,16 @@ class Cars extends Controller
     public function update(Request $request, $id) //пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
     {
        $validated = $request->validate([
-        'price' => 'required|numeric|min:1|max:1000000000'
+        'brand' => 'required|min:1|max:100',
+        'model' => 'required|min:1|max:100',
+        'price' => 'required|numeric|min:1|max:1000000000',
+        'transmission' => 'required',
        ]);
-       $car =Car::findOrFail($id);
-       $car->price = $validated['price'];
-       $car->save();
+       $car = Car::findOrFail($id);
+       $car->update($validated);
+      /*  $car->price = $validated['price']; */
+
+      /*  $car->save(); */
        
        return redirect('/cars')->with('success', 'Цена обнавлена');
     }
@@ -68,5 +73,11 @@ class Cars extends Controller
     public function check() 
     {
         dd(config('app-cars.transmissions'));
+    }
+
+    public function redactionById($id) 
+    {
+        $car = Car::findOrFail($id);
+        return view('cars.redaction', ['cars'=>$car]);
     }
 }

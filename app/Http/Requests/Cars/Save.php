@@ -18,7 +18,8 @@ class Save extends FormRequest
         return [
             'brand' => 'required|min:2|max:100',
             'model' => 'required|min:2|max:100',
-            'price' => 'required|integer|min:0|max:10000000000'
+            'price' => 'required|integer|min:0|max:10000000000',
+            'transmission' => 'required'
         ];
     }
 

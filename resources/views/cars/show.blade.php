@@ -10,12 +10,7 @@
 </div>
 
 <div class="d-flex align-items-center gap-3">
-    <form method="post" action="/cars/{{$cars->id}}" class="d-flex align-items-center gap-2 mb-0">
-        @csrf
-        @method('PATCH')
-        <x-cars.input label="Change price:" name="price" default-value="{{$cars->price}}"/>
-        <button type="submit" class="btn btn-primary">Send</button>
-    </form>
+<a href="{{ route('cars.redactionById', $cars->id) }}" class="btn btn-success mb-3">Redaction</a>
 
     <form method="post" action="{{route('cars.delete', [$cars->id])}}" class="mb-0">
         @csrf

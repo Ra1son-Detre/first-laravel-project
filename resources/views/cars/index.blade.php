@@ -21,7 +21,8 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <strong>Brand:</strong> {{ $car->brand }}<br>
-                        <strong>Model:</strong> {{ $car->model }}
+                        <strong>Model:</strong> {{ $car->model }}<br>
+                        <strong>Transmission:</strong> {{ $car->transmission }}
                     </div>
                     <span class="badge bg-primary align-self-center">${{ $car->price }}</span>
                 </div>
