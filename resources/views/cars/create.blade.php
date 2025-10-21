@@ -8,6 +8,7 @@
     <x-cars.input label="Model" name="model" />
     <x-cars.input label="Price" name="price" />
     <x-cars.select label="Change transmission:" name="transmission" :options="config('app-cars.transmissions')"  />
+    @dump($errors->toArray())
     <button>Send</button>
 </form>
 @endsection

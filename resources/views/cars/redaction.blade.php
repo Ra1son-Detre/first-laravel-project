@@ -1,8 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Show car')
+@section('title', 'Redaction car')
 @section('content')
 
-<div> Мы тут</div>
 <div class="mb-4">
     <strong>Brand:</strong> {{$cars->brand}}<br>
     <strong>Model:</strong> {{$cars->model}}<br>

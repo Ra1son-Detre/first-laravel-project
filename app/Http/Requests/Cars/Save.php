@@ -26,9 +26,10 @@ class Save extends FormRequest
     public function attributes() 
     {
         return [
-            'brand' => " 'Brand'",
-            'model' => " 'Model'",
-            'price' => " 'Price'"
+            'brand' => 'Brand',
+            'model' => 'Model',
+            'price' => 'Price',
+            'transmission' => 'Transmission',
         ];
 
     }

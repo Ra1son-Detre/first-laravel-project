@@ -6,6 +6,7 @@
 <div class="mb-4">
     <strong>Brand:</strong> {{$cars->brand}}<br>
     <strong>Model:</strong> {{$cars->model}}<br>
+    <strong>Transmission:</strong> {{$cars->transmission}}<br>
     <strong>Price:</strong> ${{$cars->price}}
 </div>
 
