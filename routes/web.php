@@ -15,6 +15,7 @@ use App\Http\Controllers\Cars;
 |
 */
 Route::get('/cars', [Cars::class, 'index'])->name('cars.showAll');
+Route::get('/cars/test', [Cars::class, 'test'])->name('cars.test');//Тест
 Route::get('/cars/check', [Cars::class, 'check']); //Тест
 Route::get('/cars/create', [Cars::class, 'create'])->name('cars.create');
 Route::post('/cars', [Cars::class, 'store'])->name('cars.store');

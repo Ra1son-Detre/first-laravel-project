@@ -2,6 +2,7 @@
     'label',
     'name',
     'defaultValue' => '',
+    'placeholder' =>'',
 ])
 
 <div class="mb-3">
@@ -15,6 +16,7 @@
         id="{{ $name }}" 
         class="form-control @error($name) is-invalid @enderror" 
         value="{{ old($name, $defaultValue) }}"
+        placeholder="{{$placeholder}}"
     >
 
     @error($name)

@@ -7,8 +7,8 @@
     <x-cars.input label="Brand" name="brand" />
     <x-cars.input label="Model" name="model" />
     <x-cars.input label="Price" name="price" />
+    <x-cars.input label="Vin" name="vin" placeholder="Vin из 6 цифр."/>
     <x-cars.select label="Change transmission:" name="transmission" :options="config('app-cars.transmissions')"  />
-    @dump($errors->toArray())
     <button>Send</button>
 </form>
 @endsection

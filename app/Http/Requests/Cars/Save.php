@@ -19,7 +19,8 @@ class Save extends FormRequest
             'brand' => 'required|min:2|max:100',
             'model' => 'required|min:2|max:100',
             'price' => 'required|integer|min:0|max:10000000000',
-            'transmission' => 'required'
+            'transmission' => 'required',
+            'vin' => 'required|string|size:6|unique:cars,vin'
         ];
     }
 
@@ -30,6 +31,7 @@ class Save extends FormRequest
             'model' => 'Model',
             'price' => 'Price',
             'transmission' => 'Transmission',
+            'vin' => 'Vin',
         ];
 
     }

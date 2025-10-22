@@ -45,21 +45,14 @@ class Cars extends Controller
     }
 
   
-    public function update(Request $request, $id) //пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
+    public function update(SaveRequest $request, $id) //пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
     {
-       $validated = $request->validate([
-        'brand' => 'required|min:1|max:100',
-        'model' => 'required|min:1|max:100',
-        'price' => 'required|numeric|min:1|max:1000000000',
-        'transmission' => 'required',
-       ]);
-       $car = Car::findOrFail($id);
-       $car->update($validated);
-      /*  $car->price = $validated['price']; */
-
-      /*  $car->save(); */
        
-       return redirect('/cars')->with('success', 'Цена обнавлена');
+       $car = Car::findOrFail($id);
+       $car->update($request->validated());
+       $oldBrand = $car->brand; //старое значение в переменной до изменения (тут можно добавить идею мол что на что поменяли при выводе сообщ. но надо бы отдельный еласс под такое реализовать)
+       
+       return redirect('/cars')->with('success', "Машина $oldBrand отредактирована!");
     }
 
  
@@ -70,14 +63,21 @@ class Cars extends Controller
         return redirect()->route('cars.showAll')->with('success', "Car: $car->model delete ");
     }
 
-    public function check() 
-    {
-        dd(config('app-cars.transmissions'));
-    }
 
     public function redactionById($id) 
     {
         $car = Car::findOrFail($id);
         return view('cars.redaction', ['cars'=>$car]);
+    }
+
+    public function check() 
+    {
+        dd(config('app-cars.transmissions'));
+    }
+
+    public function test() 
+    {
+        
+        return view('cars.test');
     }
 }

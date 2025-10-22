@@ -7,6 +7,7 @@
     <strong>Brand:</strong> {{$cars->brand}}<br>
     <strong>Model:</strong> {{$cars->model}}<br>
     <strong>Transmission:</strong> {{$cars->transmission}}<br>
+    <strong>Vin:</strong> {{$cars->vin}}<br>
     <strong>Price:</strong> ${{$cars->price}}
 </div>
 

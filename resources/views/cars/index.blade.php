@@ -22,7 +22,9 @@
                     <div>
                         <strong>Brand:</strong> {{ $car->brand }}<br>
                         <strong>Model:</strong> {{ $car->model }}<br>
-                        <strong>Transmission:</strong> {{ $car->transmission }}
+                        <strong>Transmission:</strong> {{ $car->transmission }}<br>
+                        <strong>Vin:</strong> {{ $car->vin }}<br>
+                        
                     </div>
                     <span class="badge bg-primary align-self-center">${{ $car->price }}</span>
                 </div>
