@@ -6,22 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  
+ 
     public function up()
     {
         Schema::table('cars', function (Blueprint $table) {
-            if(!Schema::hasColumn('cars', 'vin')) {
-
-            $table->string('vin', 6)->unique()->after('model');
-        }});
+            $table->softDeletes();
+        });
     }
 
-  
+   
     public function down()
     {
         Schema::table('cars', function (Blueprint $table) {
-            $table->dropUnique(['vin']);
-            $table->dropColumn('vin');
+            $table->dropSoftDeletes();
         });
     }
 };

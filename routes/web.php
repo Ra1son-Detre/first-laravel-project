@@ -19,6 +19,7 @@ Route::get('/cars/test', [Cars::class, 'test'])->name('cars.test');//Тест
 Route::get('/cars/check', [Cars::class, 'check']); //Тест
 Route::get('/cars/create', [Cars::class, 'create'])->name('cars.create');
 Route::post('/cars', [Cars::class, 'store'])->name('cars.store');
+Route::get('/cars/trash', [Cars::class, 'showTrashCars'])->name('cars.showTrashCars'); //Удаленные (Карзина)
 Route::patch('/cars/{id}', [Cars::class, 'update'])->name('cars.update');
 Route::get('/cars/{id}/redaction', [Cars::class, 'redactionById'])->name('cars.redactionById'); //Дубль над чем работаем 
 Route::get('/cars/{id}', [Cars::class, 'show'])->name('cars.showById');

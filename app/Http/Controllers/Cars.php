@@ -70,6 +70,12 @@ class Cars extends Controller
         return view('cars.redaction', ['cars'=>$car]);
     }
 
+    public function showTrashCars()
+    {
+        $trashCars = Car::onlyTrashed()->get();
+        return view('cars.trash' , ['trashCars' => $trashCars]);
+    }
+
     public function check() 
     {
         dd(config('app-cars.transmissions'));

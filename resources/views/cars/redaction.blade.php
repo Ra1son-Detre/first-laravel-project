@@ -15,7 +15,7 @@
         <x-cars.input label="Change brand:" name="brand" default-value="{{$cars->brand}}"/>
         <x-cars.input label="Change model:" name="model" default-value="{{$cars->model}}"/>
         <x-cars.input label="Change price:" name="price" default-value="{{$cars->price}}"/>
-        <x-cars.input label="Vin" name="vin" placeholder="Vin из 6 цифр."/>
+        <x-cars.input label="Change vin:"   name="vin" default-value="{{$cars->vin}}" placeholder="Vin из 6 цифр." />
         <x-cars.select label="Change transmission:" name="transmission" :options="config('app-cars.transmissions')"  /> {{-- :selected="old('transmission')/>  --}}
         <button type="submit" class="btn btn-primary">Send</button>
     </form>
