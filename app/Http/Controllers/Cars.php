@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Http\Requests\Cars\Save as SaveRequest;
+use App\Models\Brand;
 
 class Cars extends Controller
 {
     public function index()
     {
-        $cars = Car::orderBy('brand')->get();
+        $cars = Car::orderBy('created_at')->get();
         return view('cars.index',compact('cars'));
         /* dd($cars); */
     }
@@ -19,7 +20,9 @@ class Cars extends Controller
     
     public function create()
     {
-        return view('cars.create');
+        $brands = Brand::orderBy('title')->pluck('title', 'id');// pluck делает массив двухмерным вторым параметром ключь 
+        /* dd($brands); */
+        return view('cars.create', compact('brands'));
     }
 
     
@@ -51,7 +54,7 @@ class Cars extends Controller
        $car->update($request->validated());
        $oldModel = $car->model; //старое значение в переменной до изменения (тут можно добавить идею мол что на что поменяли при выводе сообщ. но надо бы отдельный еласс под такое реализовать)
        
-       return redirect('/cars')->with('success', __ ('alerts.cars.update',['oldModel' => $oldModel]));// в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
+       return redirect('/cars')->with('success', __ ('alerts.cars.update',['oldModel' => $oldModel]));// 
     }
 
  
@@ -63,10 +66,11 @@ class Cars extends Controller
     }
 
 
-    public function redactionById($id) 
+    public function redactionById($id) // по хорошему перенести в едит это все но потом на свежую голову 
     {
         $car = Car::findOrFail($id);
-        return view('cars.redaction', ['cars'=>$car]);
+        $brands = Brand::orderBy('title')->pluck('title', 'id');
+        return view('cars.redaction', compact('car', 'brands'));
     }
 
     public function showTrashCars()

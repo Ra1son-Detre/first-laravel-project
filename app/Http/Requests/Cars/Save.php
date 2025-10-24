@@ -17,7 +17,7 @@ class Save extends FormRequest
     public function rules()
     {
         return [
-            'brand' => 'required|min:2|max:100',
+            'brand_id' => ['required', 'exists:brands,id'],
             'model' => 'required|min:2|max:100',
             'price' => 'required|integer|min:0|max:10000000000',
             'transmission' => 'required',
@@ -33,7 +33,7 @@ class Save extends FormRequest
     public function attributes() 
     {
         return [
-            'brand' => 'Brand',
+            'brand_id' => 'Brand',
             'model' => 'Model',
             'price' => 'Price',
             'transmission' => 'Transmission',
