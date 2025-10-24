@@ -5,11 +5,12 @@
 @section('content')
 
 
-    @if (session('success'))
-        <div class="alert alert-success">
+   <!--  @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    @endif  Перенес в layouts-->
 
     <h1 class="mb-4">All Cars</h1>
 

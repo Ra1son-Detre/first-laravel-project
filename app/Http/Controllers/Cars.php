@@ -28,9 +28,8 @@ class Cars extends Controller
         
         $car = Car::create($request->validated());
         $cars = Car::all();
-        return redirect()->route('cars.showAll')->with('success', 'Машина успешно добавлена!');
+        return redirect()->route('cars.showAll')->with('success', __('alert.cars.store', ['brand' => $car->brand, 'model' => $car->model])); // в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
     }
-
    
     public function show($id)
     {
@@ -50,9 +49,9 @@ class Cars extends Controller
        
        $car = Car::findOrFail($id);
        $car->update($request->validated());
-       $oldBrand = $car->brand; //старое значение в переменной до изменения (тут можно добавить идею мол что на что поменяли при выводе сообщ. но надо бы отдельный еласс под такое реализовать)
+       $oldModel = $car->model; //старое значение в переменной до изменения (тут можно добавить идею мол что на что поменяли при выводе сообщ. но надо бы отдельный еласс под такое реализовать)
        
-       return redirect('/cars')->with('success', "Машина $oldBrand отредактирована!");
+       return redirect('/cars')->with('success', __ ('alerts.cars.update',['oldModel' => $oldModel]));// в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
     }
 
  
@@ -60,7 +59,7 @@ class Cars extends Controller
     {
         $car = Car::findOrFail($id);
         $car->delete();
-        return redirect()->route('cars.showAll')->with('success', "Car: $car->model delete ");
+        return redirect()->route('cars.showAll')->with('success', __ ('alerts.cars.destroy', ['model' => $car->model]));// в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
     }
 
 
@@ -72,7 +71,7 @@ class Cars extends Controller
 
     public function showTrashCars()
     {
-        $trashCars = Car::onlyTrashed()->get();
+        $trashCars = Car::onlyTrashed()->get(); // ТОЛЬКО удаленные записи после мягкого удаления
         return view('cars.trash' , ['trashCars' => $trashCars]);
     }
 

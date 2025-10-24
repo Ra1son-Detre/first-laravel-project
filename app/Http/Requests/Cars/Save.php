@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Cars;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class Save extends FormRequest
 {
@@ -20,8 +21,13 @@ class Save extends FormRequest
             'model' => 'required|min:2|max:100',
             'price' => 'required|integer|min:0|max:10000000000',
             'transmission' => 'required',
-            'vin' => 'required|string|size:6|unique:cars,vin'
-        ];
+            'vin' => [
+                'required',
+                'string',
+                'size:6',
+                Rule::unique('cars', 'vin')->ignore($this->route('id')),
+                ]
+            ];
     }
 
     public function attributes() 
