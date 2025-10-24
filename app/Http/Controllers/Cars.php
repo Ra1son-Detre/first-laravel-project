@@ -11,8 +11,8 @@ class Cars extends Controller
 {
     public function index()
     {
-        $cars = Car::all();
-        return view('cars.index',['cars'=>$cars]);
+        $cars = Car::orderBy('brand')->get();
+        return view('cars.index',compact('cars'));
         /* dd($cars); */
     }
 
@@ -28,7 +28,7 @@ class Cars extends Controller
         
         $car = Car::create($request->validated());
         $cars = Car::all();
-        return redirect()->route('cars.showAll')->with('success', __('alert.cars.store', ['brand' => $car->brand, 'model' => $car->model])); // в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
+        return redirect()->route('cars.showAll')->with('success', __('alerts.cars.store', ['brand' => $car->brand, 'model' => $car->model])); // в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
     }
    
     public function show($id)
@@ -55,11 +55,11 @@ class Cars extends Controller
     }
 
  
-    public function destroy($id)
+    public function destroy($id) //проблема поч ищу в ручную это в маршрутах и Route Model Binding уточнить у сенсеев !!!
     {
         $car = Car::findOrFail($id);
         $car->delete();
-        return redirect()->route('cars.showAll')->with('success', __ ('alerts.cars.destroy', ['model' => $car->model]));// в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
+        return redirect()->route('cars.showAll')->with('success', __ ('alerts.cars.destroy', ['brand' => $car->brand, 'model' => $car->model]));// в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
     }
 
 
@@ -71,8 +71,27 @@ class Cars extends Controller
 
     public function showTrashCars()
     {
-        $trashCars = Car::onlyTrashed()->get(); // ТОЛЬКО удаленные записи после мягкого удаления
-        return view('cars.trash' , ['trashCars' => $trashCars]);
+        $trashCars = Car::onlyTrashed()->orderByDesc('created_at')->get(); // ТОЛЬКО удаленные записи после мягкого удаления
+        return view('cars.trash' , compact('trashCars'));
+    }
+
+    public function restore ($id)
+    {
+       $trashCar = Car::onlyTrashed()->findOrFail($id);
+
+        // Для случае если запись уже удалена из базы надо использовать try catch 
+
+        $trashCar->restore();
+
+        return redirect()->route('cars.showAll')->with('success', __('alerts.cars.restore', ['brand' => $trashCar->brand, 'model' => $trashCar->model]));
+    }
+
+    public function destroyForever ($id) 
+    {   
+        $car = Car::withTrashed()->findOrFail($id);
+        $car->forceDelete();
+
+        return redirect()->route('cars.showAll')->with('success', __('alerts.cars.destroyForever', ['brand'=> $car->brand, 'model'=>$car->model]));
     }
 
     public function check() 

@@ -25,13 +25,13 @@
                 <strong>Price:</strong> ${{ $car->price }}
             </div>
             <div class="d-flex gap-2">
-                <form action="{{-- route('cars.restore', $car->id) --}}" method="POST">
+                <form action="{{route('cars.restore', $car->id)}}" method="POST">
                     @csrf
-                    @method('PATCH')
+                    @method('PUT')
                     <button class="btn btn-warning btn-sm" type="submit">Restore</button>
                 </form>
 
-                <form action="{{-- route('cars.forceDelete', $car->id) --}}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this car?');">
+                <form action="{{route('cars.destroyForever', $car->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this car?');">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger btn-sm" type="submit">Delete Permanently</button>

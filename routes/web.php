@@ -3,28 +3,26 @@
 use App\Http\Controllers\Posts;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cars;
+use App\Http\Controllers\Brands;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-Route::get('/cars', [Cars::class, 'index'])->name('cars.showAll');
-Route::get('/cars/test', [Cars::class, 'test'])->name('cars.test');//Тест
+
+Route::get('/cars', [Cars::class, 'index'])->name('cars.showAll'); //вывод на гоавную всех машин
+Route::get('/cars/test', [Cars::class, 'test'])->name('cars.test'); //Тест
 Route::get('/cars/check', [Cars::class, 'check']); //Тест
-Route::get('/cars/create', [Cars::class, 'create'])->name('cars.create');
-Route::post('/cars', [Cars::class, 'store'])->name('cars.store');
-Route::get('/cars/trash', [Cars::class, 'showTrashCars'])->name('cars.showTrashCars'); //Удаленные (Карзина)
-Route::patch('/cars/{id}', [Cars::class, 'update'])->name('cars.update');
+Route::get('/cars/create', [Cars::class, 'create'])->name('cars.create'); //Переход на страничку создания
+Route::post('/cars', [Cars::class, 'store'])->name('cars.store'); //Создание новой сущности в базе
+Route::get('/cars/trash', [Cars::class, 'showTrashCars'])->name('cars.showTrashCars'); //Показ удаленных машин
+Route::put('/cars/{car}/restore', [Cars::class, 'restore'])->name('cars.restore'); //Восстановление 1 машины
+Route::patch('/cars/{id}', [Cars::class, 'update'])->name('cars.update'); //Редактирование 1 записи
 Route::get('/cars/{id}/redaction', [Cars::class, 'redactionById'])->name('cars.redactionById'); //Дубль над чем работаем 
 Route::get('/cars/{id}', [Cars::class, 'show'])->name('cars.showById');
-/* Route::patch('/cars/{id}', [Cars::class, 'update'])->name('cars.update'); *///Это потом убрать
+Route::delete('/cars/{id}/destroyForever', [Cars::class, 'destroyForever'])->name('cars.destroyForever'); //Окончательное удаление 1 машины
 Route::delete('/cars/{id}', [Cars::class, 'destroy'])->name('cars.delete');
+
+
+
+
+Route::resource('brands', Brands::class);
 
 
 
