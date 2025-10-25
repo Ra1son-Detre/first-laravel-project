@@ -12,7 +12,7 @@ class Car extends Model
     use SoftDeletes;
 
 
-    protected $fillable = ['brand', 'model', 'price', 'transmission', 'vin'];
+    protected $fillable = ['brand_id', 'model', 'price', 'transmission', 'vin'];
 
     public function brand () 
     {

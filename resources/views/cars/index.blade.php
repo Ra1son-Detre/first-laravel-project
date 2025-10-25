@@ -21,7 +21,7 @@
             <a href="{{ route('cars.showById', $car->id) }}" class="list-group-item list-group-item-action">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <strong>Brand:</strong> {{ $car->brand }}<br>
+                        <strong>Brand:</strong> {{ $car->brand->title ?? 'No brand' }}<br>
                         <strong>Model:</strong> {{ $car->model }}<br>
                         <strong>Transmission:</strong> {{ $car->transmission }}<br>
                         <strong>Vin:</strong> {{ $car->vin }}<br>

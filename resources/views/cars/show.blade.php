@@ -7,14 +7,14 @@
 <div class="card shadow-sm border-0">
     <div class="card-header bg-primary text-white">
         <h3 class="mb-0">
-            🚗 {{ $cars->brand }} — {{ $cars->model }}
+            🚗 {{ $cars->brand->title  }} — {{ $cars->model }}
         </h3>
     </div>
 
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-md-6">
-                <p><strong>Brand:</strong> {{ $cars->brand }}</p>
+                <p><strong>Brand:</strong> {{ $cars->brand->title }}</p>
                 <p><strong>Model:</strong> {{ $cars->model }}</p>
                 <p><strong>Transmission:</strong> {{ ucfirst($cars->transmission) }}</p>
             </div>

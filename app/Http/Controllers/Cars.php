@@ -12,7 +12,7 @@ class Cars extends Controller
 {
     public function index()
     {
-        $cars = Car::orderBy('created_at')->get();
+        $cars = Car::with('brand')->orderBy('created_at')->get(); //это не жадная загрузка получить все машины с их брендами, отсортированные по дате создания
         return view('cars.index',compact('cars'));
         /* dd($cars); */
     }
@@ -31,6 +31,7 @@ class Cars extends Controller
         
         $car = Car::create($request->validated());
         $cars = Car::all();
+      /*   dd($request->all()); */
         return redirect()->route('cars.showAll')->with('success', __('alerts.cars.store', ['brand' => $car->brand, 'model' => $car->model])); // в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
     }
    

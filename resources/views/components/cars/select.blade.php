@@ -7,11 +7,11 @@
 
     <select name="{{ $name }}" id="{{ $name }}" class="form-select" required>
     <option value="" disabled {{ $selected === '' ? 'selected' : '' }}>-- выберите значение --</option>
-        @foreach($options as $value)
-            <option value="{{ $value }}" {{ $value == $selected ? 'selected' : '' }}>
-                {{ ucfirst($value) }}
-            </option>
-        @endforeach
+    @foreach($options as $id => $title)
+    <option value="{{ $id }}" {{ $id == $selected ? 'selected' : '' }}>
+        {{ ucfirst($title) }}
+    </option>
+    @endforeach
     </select>
 
     @error($name)

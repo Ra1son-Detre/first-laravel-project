@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="mb-4">
-    <strong>Brand:</strong> {{$cars->brand}}<br>
+    <strong>Brand:</strong> {{$car->brand->title }}<br>
     <strong>Model:</strong> {{$cars->model}}<br>
     <strong>Price:</strong> ${{$cars->price}}
 </div>
