@@ -14,6 +14,11 @@ class Brand extends Model
 
     public function cars() 
     {
-        return $this->hasMany(Car::class);
+        return $this->hasMany(Car::class); // Связь один к многим
+    }
+
+    public function country() 
+    {
+        return $this->belongsTo(Country::class); // Связь один к одному (ну точнее у страны много можеть быть машин поэтому)
     }
 }

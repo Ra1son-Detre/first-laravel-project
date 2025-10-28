@@ -32,7 +32,7 @@ class Cars extends Controller
         $car = Car::create($request->validated());
         $cars = Car::all();
       /*   dd($request->all()); */
-        return redirect()->route('cars.showAll')->with('success', __('alerts.cars.store', ['brand' => $car->brand, 'model' => $car->model])); // в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
+        return redirect()->route('cars.showAll')->with('success', __('alerts.cars.store', ['brand' => $car->brand->title, 'model' => $car->model])); // выводится весь объект Eloquent стоит быть внимательным при выводе 
     }
    
     public function show($id)
@@ -53,7 +53,7 @@ class Cars extends Controller
        
        $car = Car::findOrFail($id);
        $car->update($request->validated());
-       $oldModel = $car->model; //старое значение в переменной до изменения (тут можно добавить идею мол что на что поменяли при выводе сообщ. но надо бы отдельный еласс под такое реализовать)
+       $oldModel = $car->model; 
        
        return redirect('/cars')->with('success', __ ('alerts.cars.update',['oldModel' => $oldModel]));// 
     }
@@ -69,9 +69,9 @@ class Cars extends Controller
 
     public function redactionById($id) // по хорошему перенести в едит это все но потом на свежую голову 
     {
-        $car = Car::findOrFail($id);
+        $cars = Car::findOrFail($id);
         $brands = Brand::orderBy('title')->pluck('title', 'id');
-        return view('cars.redaction', compact('car', 'brands'));
+        return view('cars.redaction', compact('cars', 'brands'));
     }
 
     public function showTrashCars()

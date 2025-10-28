@@ -9,12 +9,15 @@
 
     {{-- Шапка --}}
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('cars.showAll') }}"> Main 🚗</a>
-            <a class="nav-link" href="{{ route('cars.create') }}">Add 🆕 Car </a>
-            <a class="nav-link" href="{{ route('cars.showTrashCars') }}">Trash 🗑️ Cars </a>
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('cars.showAll') }}">Main 🚗</a>
+        <div class="d-flex gap-2">
+            <a class="btn btn-success btn-sm" href="{{ route('cars.create') }}">Add 🆕 Car</a>
+            <a class="btn btn-outline-secondary btn-sm" href="{{ route('brands.index') }}">Brands 🔖</a>
+            <a class="btn btn-warning btn-sm" href="{{ route('cars.showTrashCars') }}">Trash 🗑️</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
     @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">

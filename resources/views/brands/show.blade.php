@@ -12,16 +12,18 @@
     </div>
 
     @foreach ($brand->cars as $car)
-    <div class="card-body">
+    <div class="card mb-3 p-3 border rounded">   
+        <div class="card-body">
         <div class="row mb-1">
             <div class="col-md-6">
-                <p><strong>Model:</strong> {{ $car->model }}</p>
+                <p><strong>Model {{$loop->iteration}}:</strong> {{ $car->model }}</p>
                 <p><strong>Transmission:</strong> {{ $car->transmission }}</p>
                 <p><strong>Vin:</strong> {{ $car->vin }}</p>
                 <p><strong>Price:</strong> ${{ $car->price }}</p>
             </div>
         </div>
     </div>
+</div>
     @endforeach
 
     <div class="card-footer d-flex justify-content-between align-items-center bg-light">

@@ -10,14 +10,15 @@
 
     <div class="list-group">
         @foreach($brands as $brand)
-            <a href="{{ route('brands.show', $brand->id) }}" class="list-group-item list-group-item-action">
+        <div class="card mb-3 p-3 border rounded">    
+        <a href="{{ route('brands.show', $brand->id) }}" class="list-group-item list-group-item-action">
                 <div class="d-flex justify-content-between">
                     <div>
                         <strong>Brand:</strong> {{ $brand->title }}<br>
                         
                     </div>
                 </div>
-            </a>
+            </a></div> 
         @endforeach
     </div>
     @else
