@@ -10,7 +10,7 @@ Route::get('/cars', [Cars::class, 'index'])->name('cars.showAll'); //вывод 
 Route::get('/cars/test', [Cars::class, 'test'])->name('cars.test'); //Тест
 Route::get('/cars/check', [Cars::class, 'check']); //Тест
 Route::get('/cars/create', [Cars::class, 'create'])->name('cars.create'); //Переход на страничку создания
-Route::post('/cars', [Cars::class, 'store'])->name('cars.store'); //Создание новой сущности в базе
+Route::post('/cars', [Cars::class, 'store'])->name('cars.store'); //Создание новой сущности (просто записи) в базе
 Route::get('/cars/trash', [Cars::class, 'showTrashCars'])->name('cars.showTrashCars'); //Показ удаленных машин
 Route::put('/cars/{car}/restore', [Cars::class, 'restore'])->name('cars.restore'); //Восстановление 1 машины
 Route::patch('/cars/{id}', [Cars::class, 'update'])->name('cars.update'); //Редактирование 1 записи

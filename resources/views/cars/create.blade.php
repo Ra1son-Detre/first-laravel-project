@@ -1,51 +1,21 @@
-@extends('layouts.app')
-
-@section('title', 'Create car')
-
-@section('content')
-<h2>Create car</h2>
-
-<form method="post" action="{{ route('cars.store') }}">
-    @csrf
-
-    {{-- Select brand --}}
-    <x-cars.select 
+    @extends('layouts.app')
+    @section('title', 'Create car')
+    @section('content')
+    <h2>Create car</h2>
+    <form method="post" action="{{route('cars.store')}}">
+        @csrf
+        <x-cars.select 
         name="brand_id" 
         label="Brand:" 
         :options="$brands" 
         :selected="old('brand_id', $car->brand_id ?? '')"
     />
-
-    {{-- Model --}}
-    <x-cars.input 
-        label="Model" 
-        name="model" 
-        :value="old('model', $car->model ?? '')"
-    />
-
-    {{-- Price --}}
-    <x-cars.input 
-        label="Price" 
-        name="price" 
-        :value="old('price', $car->price ?? '')"
-    />
-
-    {{-- Vin --}}
-    <x-cars.input 
-        label="Vin" 
-        name="vin" 
-        placeholder="Vin из 6 цифр."
-        :value="old('vin', $car->vin ?? '')"
-    />
-
-    {{-- Transmission --}}
-    <x-cars.select 
-        name="transmission" 
-        label="Choose transmission:" 
-        :options="array_combine(config('app-cars.transmissions'), config('app-cars.transmissions'))"
-        :selected="old('transmission', $car->transmission ?? '')"
-    />
-
-    <button type="submit" class="btn btn-primary">Send</button>
-</form>
-@endsection
+        <x-cars.input label="Model" name="model" />
+        <x-cars.input label="Price" name="price" />
+        <x-cars.input label="Vin" name="vin" placeholder="Vin из 6 цифр."/>
+        <x-cars.select label="Chose transmission:" name="transmission" :options="config('app-cars.transmissions')"  />
+        
+        <x-form-select multiple  class="form-label" name="tags[]" label="Tags" :options="$tags" :size="$tags->count()" placeholder="Не выбрано"></x-form-select>
+        <button>Send</button>
+    </form>
+    @endsection

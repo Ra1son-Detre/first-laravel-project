@@ -24,9 +24,12 @@ class Save extends FormRequest
             'vin' => [
                 'required',
                 'string',
-                'size:6',
+                'min:2',
+                'max:16',
                 Rule::unique('cars', 'vin')->ignore($this->route('id')),
-                ]
+            ],
+            'tags'=> 'array',
+            'tags.*'=>'integer|exists:tags,id' //эта запись гооврит что переданное значение в массиве число и оно должно быть в таблице tags в поле id
             ];
     }
 
@@ -38,6 +41,7 @@ class Save extends FormRequest
             'price' => 'Price',
             'transmission' => 'Transmission',
             'vin' => 'Vin',
+            'tags' => 'Теги'
         ];
 
     }

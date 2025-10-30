@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Brands\Store as StoreRequest;
+use App\Http\Requests\Brands\Store as StoreRequest; // as это псевдоним, эти типо Магазин as Магаз что-бы не было путаницы в именах одинаковых
 use App\Http\Requests\Brands\Update as UpdateRequest;
 
 class Brands extends Controller

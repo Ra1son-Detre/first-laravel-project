@@ -5,7 +5,7 @@
         <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     @endif
 
-    <select name="{{ $name }}" id="{{ $name }}" class="form-select"  required>
+    <select name="{{ $name }}" id="{{ $name }}" class="form-select"  multiple required>
     <option value="" disabled {{ $selected === '' ? 'selected' : '' }}>-- выберите значение --</option>
     @foreach($options as $id => $title)
     <option value="{{ $id }}" {{ $id == $selected ? 'selected' : '' }}>

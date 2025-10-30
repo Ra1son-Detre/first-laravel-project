@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Http\Requests\Cars\Save as SaveRequest;
 use App\Models\Brand;
+use App\Models\Tag;
 
 class Cars extends Controller
 {
@@ -21,17 +22,19 @@ class Cars extends Controller
     public function create()
     {
         $brands = Brand::orderBy('title')->pluck('title', 'id');// pluck делает массив двухмерным вторым параметром ключь 
-        /* dd($brands); */
-        return view('cars.create', compact('brands'));
+        $tags = Tag::orderBy('title')->pluck('title', 'id');
+        
+        return view('cars.create', compact('brands', 'tags'));
     }
 
     
     public function store(SaveRequest $request)
-    {
-        
-        $car = Car::create($request->validated());
-        $cars = Car::all();
-      /*   dd($request->all()); */
+    {   
+        $data = collect($request->validated()); //Валидацию превращаем в лара коллекцию
+
+        $car = Car::create($data->except(['tags'])->toArray()); //исключаем отсюда таги, после чего превращаем в массив модель приним массив а не коллекцию 
+        $car->tags()->sync($data->get('tags')); // добавляем таги в табл которая описана в модели Car 
+
         return redirect()->route('cars.showAll')->with('success', __('alerts.cars.store', ['brand' => $car->brand->title, 'model' => $car->model])); // выводится весь объект Eloquent стоит быть внимательным при выводе 
     }
    
@@ -48,12 +51,15 @@ class Cars extends Controller
     }
 
   
-    public function update(SaveRequest $request, $id) //пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
+    public function update(SaveRequest $request, Car $car) //todo пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
     {
        
-       $car = Car::findOrFail($id);
-       $car->update($request->validated());
+      /*  $car = Car::findOrFail($id); */
+       $data = collect($request->validated());
        $oldModel = $car->model; 
+       $car->update($data->except(['tags'])->toArray());
+       $car->tags()->sync($data->get('tags', []));
+       
        
        return redirect('/cars')->with('success', __ ('alerts.cars.update',['oldModel' => $oldModel]));// 
     }
@@ -70,8 +76,9 @@ class Cars extends Controller
     public function redactionById($id) // по хорошему перенести в едит это все но потом на свежую голову 
     {
         $cars = Car::findOrFail($id);
+        $tags = Tag::orderBy('title')->pluck('title', 'id');
         $brands = Brand::orderBy('title')->pluck('title', 'id');
-        return view('cars.redaction', compact('cars', 'brands'));
+        return view('cars.redaction', compact('cars', 'brands', 'tags'));
     }
 
     public function showTrashCars()
@@ -96,7 +103,7 @@ class Cars extends Controller
         $car = Car::withTrashed()->findOrFail($id);
         $car->forceDelete();
 
-        return redirect()->route('cars.showAll')->with('success', __('alerts.cars.destroyForever', ['brand'=> $car->brand, 'model'=>$car->model]));
+        return redirect()->route('cars.showTrashCars')->with('success', __('alerts.cars.destroyForever', ['brand'=> $car->brand, 'model'=>$car->model]));
     }
 
     public function check() 

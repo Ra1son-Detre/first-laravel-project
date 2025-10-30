@@ -18,4 +18,9 @@ class Car extends Model
     {
         return $this->belongsTo(Brand::class); //каждая машина связана с брендом 
     }
+
+    public function tags () 
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps(); // 
+    }
 }
