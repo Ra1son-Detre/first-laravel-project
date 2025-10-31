@@ -17,7 +17,7 @@ Route::patch('/cars/{car}', [Cars::class, 'update'])->name('cars.update'); //Р�
 Route::get('/cars/{car}/redaction', [Cars::class, 'redactionById'])->name('cars.redactionById'); //Дубль над чем работаем 
 Route::get('/cars/{car}', [Cars::class, 'show'])->name('cars.showById');
 Route::delete('/cars/{id}/destroyForever', [Cars::class, 'destroyForever'])->name('cars.destroyForever'); //Окончательное удаление 1 машины
-Route::delete('/cars/{id}', [Cars::class, 'destroy'])->name('cars.delete');
+Route::delete('/cars/{car}', [Cars::class, 'destroy'])->name('cars.delete');
 
 
 

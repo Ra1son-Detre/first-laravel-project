@@ -11,6 +11,6 @@ class Tag extends Model
 
     public function cars()
     {
-        return $this->belongsToMany(Car::class);
+        return $this->belongsToMany(Car::class)->withTimestamps();
     }
 }

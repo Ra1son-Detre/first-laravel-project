@@ -16,6 +16,12 @@
         <x-cars.select label="Chose transmission:" name="transmission" :options="config('app-cars.transmissions')"  />
         
         <x-form-select multiple  class="form-label" name="tags[]" label="Tags" :options="$tags" :size="$tags->count()" placeholder="Не выбрано"></x-form-select>
+        
+        <select name="status" class="form-select">
+    @foreach($status as $stat)
+        <option value="{{ $stat->value }}">{{ $stat->text() }}</option>
+    @endforeach
+</select>
         <button>Send</button>
     </form>
     @endsection

@@ -17,6 +17,7 @@
                 <p><strong>Brand:</strong> {{ $car->brand->title }}</p>
                 <p><strong>Model:</strong> {{ $car->model }}</p>
                 <p><strong>Transmission:</strong> {{ ucfirst($car->transmission) }}</p>
+                <p><strong>Status:</strong> {{ ucfirst($car->status->text()) }}</p> 
             </div>
             <div class="col-md-6">
                 <p><strong>VIN:</strong> {{ strtoupper($car->vin) }}</p>
@@ -33,12 +34,12 @@
             </div>
         </div>
     </div>
-
+   
     <div class="card-footer d-flex justify-content-between align-items-center bg-light">
         <a href="{{ route('cars.redactionById', $car->id) }}" class="btn btn-outline-primary">
             ✏️ Edit Car
         </a>
-
+        @if ($car->canDelete)
         <form method="POST" action="{{ route('cars.delete', $car->id) }}" onsubmit="return confirm('Are you sure you want to delete {{ $car->model }}?');">
             @csrf
             @method('DELETE')
@@ -46,6 +47,7 @@
                 🗑️ Delete
             </button>
         </form>
+        @endif
     </div>
 </div>
 

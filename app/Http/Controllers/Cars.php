@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\Cars\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Car;
@@ -13,25 +14,27 @@ use Illuminate\Support\Facades\DB;
 class Cars extends Controller
 {
     public function index()
-    {
-        $cars = Car::with('brand')->orderBy('created_at')->get(); //это не жадная загрузка получить все машины с их брендами, отсортированные по дате создания
+    {   
+        /* $cars = Car::ofActive()->with('brand.country', 'tags')->orderBy('created_at')->get(); */
+        $cars = Car::ofAll();
         return view('cars.index',compact('cars'));
         /* dd($cars); */
     }
 
     
-    public function create()
+    public function create(Car $car)
     {
         $brands = Brand::orderBy('title')->pluck('title', 'id');// pluck делает массив двухмерным вторым параметром ключь 
         $tags = Tag::orderBy('title')->pluck('title', 'id');
-        
-        return view('cars.create', compact('brands', 'tags'));
+        $status = Status::cases();
+        return view('cars.create', compact('brands', 'tags', 'status'));
     }
 
     
     public function store(SaveRequest $request)     
     {   
         $data = collect($request->validated()); //Валидацию превращаем в лара коллекцию
+
         $car = Car::make($data->except('tags')->toArray()); //Исключаем отсюда таги, после чего превращаем в массив т.к модель приним массив а не коллекцию 
 
         DB::transaction(function() use (& $data, & $car){
@@ -44,6 +47,7 @@ class Cars extends Controller
    
     public function show(Car $car)
     {   
+        /* dd($car->status->text()); */
         $car->load('tags')->get(); // можно вообще это убрать, в блейде все передается и выводится (магия)
         /* dd($car); */
         return view('cars.show', compact('car'));
@@ -69,12 +73,18 @@ class Cars extends Controller
     }
 
  
-    public function destroy($id) //проблема поч ищу в ручную это в маршрутах и Route Model Binding уточнить у сенсеев !!!
-    {
-        $car = Car::findOrFail($id);
+    public function destroy(Car $car) // Динамический атрибут canDelete который описан в модели Car
+    {   
+        if($car->canDelete) {
         $car->delete();
-        return redirect()->route('cars.showAll')->with('success', __ ('alerts.cars.destroy', ['brand' => $car->brand, 'model' => $car->model]));// в контроеллере не стоит текстовые сообщения выводить, надо делать конфиг файл под сообщения 
+        return redirect()->route('cars.showAll')->with('success', __ ('alerts.cars.destroy', ['brand' => $car->brand, 'model' => $car->model]));
+        } else {
+            return  redirect()->route('cars.showById', ['car' => $car])->with('success', __('alerts.cars.errStatusDel' ));
+        }
     }
+
+        
+    
 
 
     public function redactionById(Car $car) // todo по хорошему перенести в едит это все но потом на свежую голову 

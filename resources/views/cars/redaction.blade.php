@@ -53,6 +53,7 @@
     :options="$tags" 
     :bind="$car"
 />
+   
     </div>
 
     <button type="submit" class="btn btn-primary">Send</button>
