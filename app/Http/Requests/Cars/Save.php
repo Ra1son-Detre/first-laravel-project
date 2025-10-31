@@ -26,7 +26,7 @@ class Save extends FormRequest
                 'string',
                 'min:2',
                 'max:16',
-                Rule::unique('cars', 'vin')->ignore($this->route('id')),
+                Rule::unique('cars', 'vin')->ignore($this->route('car')?->id),
             ],
             'tags'=> 'array',
             'tags.*'=>'integer|exists:tags,id' //эта запись гооврит что переданное значение в массиве число и оно должно быть в таблице tags в поле id

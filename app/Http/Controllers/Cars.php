@@ -8,6 +8,7 @@ use App\Models\Car;
 use App\Http\Requests\Cars\Save as SaveRequest;
 use App\Models\Brand;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 
 class Cars extends Controller
 {
@@ -28,20 +29,24 @@ class Cars extends Controller
     }
 
     
-    public function store(SaveRequest $request)
+    public function store(SaveRequest $request)     
     {   
         $data = collect($request->validated()); //Валидацию превращаем в лара коллекцию
+        $car = Car::make($data->except('tags')->toArray()); //Исключаем отсюда таги, после чего превращаем в массив т.к модель приним массив а не коллекцию 
 
-        $car = Car::create($data->except(['tags'])->toArray()); //исключаем отсюда таги, после чего превращаем в массив модель приним массив а не коллекцию 
-        $car->tags()->sync($data->get('tags')); // добавляем таги в табл которая описана в модели Car 
+        DB::transaction(function() use (& $data, & $car){
+        $car->save(); //Сохраняем модель car в базу
+        $car->tags()->sync($data->get('tags')); // Привязываем теги к машине через связь many-to-many 
+        });
 
         return redirect()->route('cars.showAll')->with('success', __('alerts.cars.store', ['brand' => $car->brand->title, 'model' => $car->model])); // выводится весь объект Eloquent стоит быть внимательным при выводе 
     }
    
-    public function show($id)
-    {
-        $cars = Car::findOrFail($id);
-        return view('cars.show', ['cars'=>$cars]);
+    public function show(Car $car)
+    {   
+        $car->load('tags')->get(); // можно вообще это убрать, в блейде все передается и выводится (магия)
+        /* dd($car); */
+        return view('cars.show', compact('car'));
     }
 
    
@@ -54,10 +59,9 @@ class Cars extends Controller
     public function update(SaveRequest $request, Car $car) //todo пофиксить и разобраться какого хуя не рабоатет с SaveReauest покопаться в Put и patch
     {
        
-      /*  $car = Car::findOrFail($id); */
+       $oldModel = $car->model;
        $data = collect($request->validated());
-       $oldModel = $car->model; 
-       $car->update($data->except(['tags'])->toArray());
+       $car->update($data->except(['tags'])->toArray()); 
        $car->tags()->sync($data->get('tags', []));
        
        
@@ -73,12 +77,12 @@ class Cars extends Controller
     }
 
 
-    public function redactionById($id) // по хорошему перенести в едит это все но потом на свежую голову 
+    public function redactionById(Car $car) // todo по хорошему перенести в едит это все но потом на свежую голову 
     {
-        $cars = Car::findOrFail($id);
+        $transmissions = config('app-cars.transmissions');
         $tags = Tag::orderBy('title')->pluck('title', 'id');
         $brands = Brand::orderBy('title')->pluck('title', 'id');
-        return view('cars.redaction', compact('cars', 'brands', 'tags'));
+        return view('cars.redaction', compact('car', 'brands', 'tags', 'transmissions'));
     }
 
     public function showTrashCars()

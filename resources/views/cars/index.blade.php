@@ -24,8 +24,8 @@
                         <strong>Brand:</strong> {{ $car->brand->title ?? 'No brand' }}<br>
                         <strong>Model:</strong> {{ $car->model }}<br>
                         <strong>Country:</strong> {{ $car->brand->country->title ?? 'No Country' }}<br>
-                        <strong>Transmission:</strong> {{ $car->transmission }}<br>
-                        <strong>Vin:</strong> {{ $car->vin }}<br>
+                        {{--<strong>Transmission:</strong> {{ $car->transmission }}<br> --}}
+                        {{-- <strong>Vin:</strong> {{ $car->vin }}<br> --}}
                         
                     </div>
                     <span class="badge bg-primary align-self-center">${{ $car->price }}</span>

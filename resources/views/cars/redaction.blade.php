@@ -5,12 +5,12 @@
 @section('content')
 
 <div class="mb-4">
-    <strong>Brand:</strong> {{ $cars->brand->title }}<br>
-    <strong>Model:</strong> {{ $cars->model }}<br>
-    <strong>Price:</strong> ${{ $cars->price }}
+    <strong>Brand:</strong> {{ $car->brand->title }}<br>
+    <strong>Model:</strong> {{ $car->model }}<br>
+    <strong>Price:</strong> ${{ $car->price }}
 </div>
 
-<form method="post" action="{{ route('cars.update', $cars->id) }}" class="mb-4">
+<form method="post" action="{{ route('cars.update', $car->id) }}" class="mb-4">
     @csrf
     @method('PATCH')
 
@@ -19,20 +19,20 @@
             name="brand_id" 
             label="Brand:" 
             :options="$brands" 
-            :selected="old('brand_id', $cars->brand_id ?? '')" 
+            :selected="old('brand_id', $car->brand_id ?? '')" 
         />
     </div>
 
     <div class="mb-3">
-        <x-cars.input label="Change model:" name="model" default-value="{{ $cars->model }}"/>
+        <x-cars.input label="Change model:" name="model" default-value="{{ $car->model }}"/>
     </div>
 
     <div class="mb-3">
-        <x-cars.input label="Change price:" name="price" default-value="{{ $cars->price }}"/>
+        <x-cars.input label="Change price:" name="price" default-value="{{ $car->price }}"/>
     </div>
 
     <div class="mb-3">
-        <x-cars.input label="Change vin:" name="vin" default-value="{{ $cars->vin }}" placeholder="Vin"/>
+        <x-cars.input label="Change vin:" name="vin" default-value="{{ $car->vin }}" placeholder="Vin"/>
     </div>
 
     <div class="mb-3">
@@ -40,20 +40,19 @@
             label="Change transmission:" 
             name="transmission" 
             :options="config('app-cars.transmissions')" 
+            :selected="old('transmission', $car->transmission)" 
         />
     </div>
 
     <div class="mb-3">
-        <x-form-select 
-            multiple
-            class="form-label"
-            name="tags[]"
-            label="Tags"
-            :options="$tags"
-            :size="$tags->count()"
-            placeholder="Не выбрано"
-            many-relation
-        />
+    <x-form-select 
+    name="tags[]" 
+    label="Tags"
+    multiple 
+    many-relation 
+    :options="$tags" 
+    :bind="$car"
+/>
     </div>
 
     <button type="submit" class="btn btn-primary">Send</button>

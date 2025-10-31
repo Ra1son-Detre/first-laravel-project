@@ -13,9 +13,9 @@ Route::get('/cars/create', [Cars::class, 'create'])->name('cars.create'); //Пе
 Route::post('/cars', [Cars::class, 'store'])->name('cars.store'); //Создание новой сущности (просто записи) в базе
 Route::get('/cars/trash', [Cars::class, 'showTrashCars'])->name('cars.showTrashCars'); //Показ удаленных машин
 Route::put('/cars/{car}/restore', [Cars::class, 'restore'])->name('cars.restore'); //Восстановление 1 машины
-Route::patch('/cars/{id}', [Cars::class, 'update'])->name('cars.update'); //Редактирование 1 записи
-Route::get('/cars/{id}/redaction', [Cars::class, 'redactionById'])->name('cars.redactionById'); //Дубль над чем работаем 
-Route::get('/cars/{id}', [Cars::class, 'show'])->name('cars.showById');
+Route::patch('/cars/{car}', [Cars::class, 'update'])->name('cars.update'); //Редактирование 1 записи
+Route::get('/cars/{car}/redaction', [Cars::class, 'redactionById'])->name('cars.redactionById'); //Дубль над чем работаем 
+Route::get('/cars/{car}', [Cars::class, 'show'])->name('cars.showById');
 Route::delete('/cars/{id}/destroyForever', [Cars::class, 'destroyForever'])->name('cars.destroyForever'); //Окончательное удаление 1 машины
 Route::delete('/cars/{id}', [Cars::class, 'destroy'])->name('cars.delete');
 
